@@ -1,0 +1,7 @@
+.board {
+	margin: 20px;
+	padding: 20px;
+	border: 2px solid green;
+	min-height: 350px;
+	min-width: 350px;
+}

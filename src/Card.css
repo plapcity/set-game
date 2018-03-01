@@ -1,0 +1,19 @@
+.card {
+	display: inline-block;
+	border: 1px solid black;
+	font-size: 10px;
+	padding: 5px;
+	width: 40px;
+}
+
+.green {
+	background-color: green;
+}
+
+.purple {
+	background-color: purple;
+}
+
+.red {
+	background-color: red;
+}
