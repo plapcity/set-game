@@ -13,11 +13,14 @@ class Game extends React.Component {
 			// making a copy of the json so that i don't edit that one
 			deck: [],
 			availableSpaces: 12,
+			cardsOnBoard: [],
 			completedSets: 0 
 		};
 		this.deal = this.deal.bind(this);
 		this.createDeck = this.createDeck.bind(this);
+		this.shuffleDeck = this.shuffleDeck.bind(this);
 	}
+
 
 	createDeck() {
 		// create new deck
@@ -44,15 +47,30 @@ class Game extends React.Component {
 
 		const cards = cartesian(colors, numbers, shapes, patterns);
 		const fullDeck = cards.map(([color, number, shape, pattern]) => ({color, number, shape, pattern}));
+
 		this.setState({
 			deck: fullDeck
 		})
+
+		// TODO: shuffle deck before setting initial deck state
+		// this.shuffleDeck(fullDeck);
+	
+	}
+
+	shuffleDeck(deck) {
+			// TODO
 	}
 
 
 	deal(){
 		const numCards = this.state.availableSpaces;
-		// check available spaces, get that many cards from the deck
+		const deck = this.state.deck;
+		const cardsOnBoard = deck.splice(0, numCards)
+		this.setState({
+			availableSpaces: 0,
+			cardsOnBoard: cardsOnBoard,
+			deck: deck
+		})
 	}
 
 	render(){
@@ -63,7 +81,7 @@ class Game extends React.Component {
 				<button onClick={this.deal}>Deal</button>
 				<div className="gameContainer">
 					<Deck deck={this.state.deck}/>
-					<Board spaces={this.state.availableSpaces}/>
+					<Board spaces={this.state.availableSpaces} cards={this.state.cardsOnBoard}/>
 					<SetList sets={this.state.completedSets}/>
 				</div>
 			</div>

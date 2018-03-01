@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Board.css';
 
+import Card from './Card';
+
 class Board extends React.Component {
 	constructor(props){
 		super(props);
@@ -9,10 +11,11 @@ class Board extends React.Component {
 	render(){
 		// there's probably a better way to do this
 		const spaces = Array(this.props.spaces).fill('space');
+		const cards = this.props.cards.map((card, index) => <Card key={index} card={card}/>)
 		return(
 			<div className="board">
-					{spaces.map((space, index) => <div key={index} className={space}/>)}
-			
+					{spaces.map((space, index) => <div key={index} className={space}/>)}			
+					{cards}
 			</div>
 
 		)

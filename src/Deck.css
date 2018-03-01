@@ -1,4 +1,6 @@
 .deck {
 	border: 3px solid blue;
+	display:flex;
+	flex-flow: row wrap;
 	width: 25%;
 }
