@@ -9,10 +9,13 @@ class Deck extends React.Component {
 	}
 
 	render(){
+		const numCards = this.props.deck.length;
+		const cards = this.props.deck.map((card, index) => <Card key={index} card={card}/>
+	)
 		return(
 			<div className='deck'>
-				<p>There are {this.props.deck.length} cards remaining in the deck</p>
-				{this.props.deck.map((card) => <Card card={card}/>)}
+				<p>There are {numCards} cards remaining in the deck</p>
+				{cards}
 			</div>
 		)
 

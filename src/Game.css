@@ -1,0 +1,11 @@
+.gameContainer {
+	display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+}
