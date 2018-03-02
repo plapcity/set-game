@@ -8,10 +8,19 @@
 
 .card {
 	flex-basis: 20%;
-	min-height: 100px;
-	border: 1px solid blue;
-	margin: 10px auto auto;
+	width: 100px;
+	height: 250px;
+	margin: 10px;
 	padding: 10px;
+	flex-grow: 1;
+	text-align: center;
+}
+
+.card-img {
+	max-height: 75px;
+	max-width: 75px;
+	display: block;
+	margin: auto;
 }
 
 .selected {
