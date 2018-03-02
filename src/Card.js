@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
 import './Card.css';
 
+// import wave from './shape-wave.svg'
+// import oval from './shape-oval.svg'
+// import diamond from './shape-diamond.svg'
+
 
 class Card extends React.Component {
+	renderShapes(){
+		const shapes = [];
+		const card = this.props.card;
+		for (var i = 0; i < card.number; i++) {
+			console.log(card);
+			shapes.push(<img key={i} src={`shape-${card.shape}.svg`}/>)
+		}
+		return shapes;
+	}
+
 	render(){
 		const card = this.props.card;
-		const cardClasses = `card ${card.color}`
+		const selected = this.props.selected;
+		const cardClasses = `card ${card.color} ${selected ? 'selected' : ''}`
+
+
+
 		return(
-			<span className={cardClasses}>
-				<span>{card.color}</span><br/>
-				<span>{card.number}</span><br/>
-				<span>{card.shape}</span><br/>
+			<div onClick={this.props.onClick} className={cardClasses}>
+				<span></span><br/>
+				{this.renderShapes()}
+			
+				
 				<span>{card.pattern}</span><br/>
-			</span>
+			</div>
 		)
 	}
 }

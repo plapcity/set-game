@@ -4,7 +4,6 @@ import './Game.css';
 import Deck from './Deck';
 import Board from './Board';
 import SetList from './SetList';
-import INITIALDECK from './deck-test.json'
 
 class Game extends React.Component {
 	constructor(props){
@@ -21,7 +20,6 @@ class Game extends React.Component {
 		this.shuffleDeck = this.shuffleDeck.bind(this);
 	}
 
-
 	createDeck() {
 		// create new deck
 		const colors = ['red', 'green', 'purple']
@@ -35,7 +33,7 @@ class Game extends React.Component {
 		    for (let j=0, l=arg[i].length; j<l; j++) {
 		      var a = arr.slice(0);
 		      a.push(arg[i][j]);
-		      if (i==max)
+		      if (i===max)
 		        r.push(a)
 		      else
 		        helper(a, i+1);
@@ -48,17 +46,26 @@ class Game extends React.Component {
 		const cards = cartesian(colors, numbers, shapes, patterns);
 		const fullDeck = cards.map(([color, number, shape, pattern]) => ({color, number, shape, pattern}));
 
-		this.setState({
-			deck: fullDeck
-		})
 
-		// TODO: shuffle deck before setting initial deck state
-		// this.shuffleDeck(fullDeck);
-	
+		this.shuffleDeck(fullDeck);
+
 	}
 
-	shuffleDeck(deck) {
-			// TODO
+	shuffleDeck(array) {
+		const shuffle = (array) => {
+		  let currentIndex = array.length, temporaryValue, randomIndex;
+		  while (0 !== currentIndex) {
+		    randomIndex = Math.floor(Math.random() * currentIndex)
+		    currentIndex -= 1
+		    temporaryValue = array[currentIndex]
+		    array[currentIndex] = array[randomIndex]
+		    array[randomIndex] = temporaryValue
+		  }
+		  return array
+		}
+		this.setState({
+			deck: shuffle(array)
+		})
 	}
 
 
@@ -72,6 +79,7 @@ class Game extends React.Component {
 			deck: deck
 		})
 	}
+
 
 	render(){
 		return(

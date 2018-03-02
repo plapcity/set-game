@@ -12,7 +12,10 @@
 	border: 1px solid blue;
 	margin: 10px auto auto;
 	padding: 10px;
+}
 
+.selected {
+	border: 5px solid black;
 }
 
 .green {
