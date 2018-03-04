@@ -25,7 +25,6 @@ class Card extends React.Component {
 
 		return(
 			<div onClick={this.props.onClick} className={cardClasses}>
-				<span></span><br/>
 				{this.renderShapes()}
 			
 				

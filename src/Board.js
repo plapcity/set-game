@@ -13,8 +13,8 @@ class Board extends React.Component {
 
 		this.checkSet = this.checkSet.bind(this);
 		this.handleCardClick = this.handleCardClick.bind(this);
-	}
 
+} 
 	handleCardClick(cardsOnBoard, i){
 		let selectedCards = this.state.selectedCards
 
@@ -42,19 +42,16 @@ class Board extends React.Component {
 		let setCheck = [];
 
 
+
 		for (let prop in cardProps) {
-			const checkProps = card1[prop] === card2[prop] === card3[prop] || (card1[prop] !== card2[prop]) && (card2[prop] !== card3[prop]) && (card1[prop] !== card3[prop]);
+			console.log(prop, card1[prop], card2[prop], card3[prop]);
+			const checkProps = (card1[prop] === card2[prop]) && (card2[prop] == card3[prop]) && (card1[prop] == card3[prop]) || (card1[prop] !== card2[prop]) && (card2[prop] !== card3[prop]) && (card1[prop] !== card3[prop]);
 			
 			setCheck = [...setCheck, checkProps]
 		}
 
 		const isSet = setCheck.every((val) => val === true)
-		console.log(isSet)
-
-
-		// once selectedCards.length == 3, check if they are indeed a set
-		// move the cards to complete set
-		// trigger a deal
+		alert(isSet ? "IT'S A SET" : "IT'S NOT A SET")
 	}
 
 	render(){

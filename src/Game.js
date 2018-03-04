@@ -9,11 +9,10 @@ class Game extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			// making a copy of the json so that i don't edit that one
 			deck: [],
 			availableSpaces: 12,
 			cardsOnBoard: [],
-			completedSets: 0 
+			completedSets: 0,
 		};
 		this.deal = this.deal.bind(this);
 		this.createDeck = this.createDeck.bind(this);
@@ -76,8 +75,8 @@ class Game extends React.Component {
 		this.setState({
 			availableSpaces: 0,
 			cardsOnBoard: cardsOnBoard,
-			deck: deck
-		})
+			deck: deck,
+		});
 	}
 
 

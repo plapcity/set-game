@@ -9,7 +9,7 @@
 .card {
 	flex-basis: 20%;
 	width: 100px;
-	height: 250px;
+	height: 200px;
 	margin: 10px;
 	padding: 10px;
 	flex-grow: 1;
@@ -17,6 +17,7 @@
 }
 
 .card-img {
+	height: 60px;
 	max-height: 75px;
 	max-width: 75px;
 	display: block;
@@ -32,7 +33,7 @@
 }
 
 .purple {
-	background-color: purple;
+	background-color: #970ede;
 }
 
 .red {
