@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import './Card.css';
 
-// import wave from './shape-wave.svg'
-// import oval from './shape-oval.svg'
-import Diamond from './shape-diamond.svg'
-
 
 class Card extends React.Component {
 	renderShapes(){
