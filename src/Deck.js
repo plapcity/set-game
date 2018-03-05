@@ -14,7 +14,7 @@ class Deck extends React.Component {
 	)
 		return(
 			<div className='deck'>
-				<p>There are {numCards} cards remaining in the deck</p>
+				<h4>There are {numCards} cards in the deck</h4>
 				{cards}
 			</div>
 		)

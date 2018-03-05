@@ -50,9 +50,7 @@ class Game extends React.Component {
 		const cards = cartesian(colors, numbers, shapes, patterns);
 		const fullDeck = cards.map(([color, number, shape, pattern, id], index) => ({id: index, color, number, shape, pattern}));
 
-
 		this.shuffleDeck(fullDeck);
-
 	}
 
 	shuffleDeck(array) {
@@ -100,11 +98,11 @@ class Game extends React.Component {
 	
 		this.setState({
 			selectedCards: selectedCards
-		})
+		}, function(){	if (this.state.selectedCards.length === 3) {
+			this.checkSet(this.state.selectedCards)
+		}})
 
-		if (selectedCards.length === 3) {
-			this.checkSet(selectedCards)
-		}
+	
 	}
 
 	checkSet(selectedCards){
@@ -132,20 +130,27 @@ class Game extends React.Component {
 			});
 			this.moveSet(selectedCards);
 		}
+		else {
+			alert("Heyo, that's not a set");
+			this.setState({
+				selectedCards: []
+			})
+		}
 	}
 
 	moveSet(set){
 		const cardsOnBoard = this.state.cardsOnBoard
 
-		// figure out more dynamic way to do this
-		cardsOnBoard.splice(cardsOnBoard.indexOf(set[0]), 1);
-		cardsOnBoard.splice(cardsOnBoard.indexOf(set[1]), 1);
-		cardsOnBoard.splice(cardsOnBoard.indexOf(set[2]), 1);
+		// probably shouldn't be updating the array directly? 
+		set.map((card) => (
+			cardsOnBoard.splice(cardsOnBoard.indexOf(card), 1)
+			))
 
 		this.setState({
 			sets: [...this.state.sets, set],
-			availableSpaces: 3
-		})
+			availableSpaces: 3,
+			cardsOnBoard: cardsOnBoard
+		}, function(){this.deal()})
 	}
 
 
@@ -154,8 +159,8 @@ class Game extends React.Component {
 		return(
 			<div className="game">
 				<h1>ReSet</h1>
-				<button onClick={this.createDeck}>Create Deck</button>
-				<button onClick={this.deal}>Deal</button>
+				<button disabled={this.state.deck.length > 0} onClick={this.createDeck}>Create Deck</button>
+				<button disabled={this.state.availableSpaces == 0} onClick={this.deal}>Deal</button>
 				<div className="gameContainer">
 					<Deck deck={this.state.deck}/>
 					<Board spaces={this.state.availableSpaces} cards={this.state.cardsOnBoard} onClick={this.handleCardClick} selectedCards={this.state.selectedCards}/>

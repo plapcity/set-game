@@ -14,8 +14,10 @@ class SetList extends React.Component {
 			))}</div>)
 		return(
 			<div className='setList'>
-				<h3>There are {this.props.sets.length} completed sets</h3> 
-				{sets}
+				<h4>There are {this.props.sets.length} completed sets</h4> 
+				<div className="sets">
+					{sets}
+				</div>
 			</div>
 		)
 	}

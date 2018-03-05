@@ -21,10 +21,9 @@ class Board extends React.Component {
 		)
 		return(
 			<div className="board">
-					{spaces.map((space, index) => <div key={index} className={space}/>)}			
-					{cards}
+				{cards}
+				{spaces.map((space, index) => <div key={index} className= 'card space'/>)}			
 			</div>
-
 		)
 	}
 }

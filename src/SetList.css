@@ -1,4 +1,17 @@
 .setList {
   border: 1px solid purple;
-  /*	height: 300px;
-	width: 300px;*/ }
+  margin: 50px 0;
+  padding: 10px;
+}
+
+
+.sets {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.setGroup {
+	display: flex;
+	flex-flow: row wrap;
+	margin: 20px;
+}
