@@ -21,6 +21,7 @@ class Game extends React.Component {
 		this.checkSet = this.checkSet.bind(this);
 		this.handleCardClick = this.handleCardClick.bind(this);
 		this.moveSet = this.moveSet.bind(this);
+		this.dealMore = this.dealMore.bind(this);
 
 	}
 
@@ -82,6 +83,17 @@ class Game extends React.Component {
 		});
 	}
 
+	dealMore(){
+
+		const deck = this.state.deck;
+		const cardsToDeal = deck.splice(0, 3)
+		this.setState({
+			availableSpaces: 0,
+			cardsOnBoard: this.state.cardsOnBoard.concat(cardsToDeal),
+			deck: deck,
+		});
+	}
+
 	handleCardClick(cardsOnBoard, cardID){
 		let selectedCards = this.state.selectedCards
 		let card = cardsOnBoard.find(function(card) {return card.id === cardID});
@@ -117,8 +129,10 @@ class Game extends React.Component {
 
 		// prob a better way to create this dynamically
 		for (let prop in cardProps) {
-			const checkProps = (card1[prop] === card2[prop]) && (card2[prop] === card3[prop]) && (card1[prop] === card3[prop]) || (card1[prop] !== card2[prop]) && (card2[prop] !== card3[prop]) && (card1[prop] !== card3[prop]);
-			
+
+			const checkProps = (card1[prop] === card2[prop]) && (card2[prop] === card3[prop]) || (card1[prop] !== card2[prop]) && (card2[prop] !== card3[prop]) && (card1[prop] !== card3[prop]);
+			// note: for "all same", i only need to check if a & b, and b & c are equal. if both of those are true then a & c must be equal
+
 			setCheck = [...setCheck, checkProps]
 		}
 
@@ -140,6 +154,7 @@ class Game extends React.Component {
 
 	moveSet(set){
 		const cardsOnBoard = this.state.cardsOnBoard
+		const spacesToFill = cardsOnBoard.length > 12 ? 0 : 3
 
 		// probably shouldn't be updating the array directly? 
 		set.map((card) => (
@@ -148,11 +163,11 @@ class Game extends React.Component {
 
 		this.setState({
 			sets: [...this.state.sets, set],
-			availableSpaces: 3,
+			availableSpaces: spacesToFill,
 			cardsOnBoard: cardsOnBoard
 		}, function(){this.deal()})
+		// ^ using a setState callback to auto-call "deal" once a set is moved out
 	}
-
 
 
 	render(){
@@ -161,6 +176,7 @@ class Game extends React.Component {
 				<h1>ReSet</h1>
 				<button disabled={this.state.deck.length > 0} onClick={this.createDeck}>Create Deck</button>
 				<button disabled={this.state.availableSpaces == 0} onClick={this.deal}>Deal</button>
+				<button onClick={this.dealMore}>Deal more!</button>
 				<div className="gameContainer">
 					<Deck deck={this.state.deck}/>
 					<Board spaces={this.state.availableSpaces} cards={this.state.cardsOnBoard} onClick={this.handleCardClick} selectedCards={this.state.selectedCards}/>

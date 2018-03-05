@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './Card.css';
 
-import waveSolid from './svg-wave-solid.svg'
-import waveOpen from './svg-wave-open.svg'
-import waveStriped from './svg-wave-striped.svg'
+// import waveSolid from './svg-wave-solid.svg'
+// import waveOpen from './svg-wave-open.svg'
+// import waveStriped from './svg-wave-striped.svg'
 
 
 class Card extends React.Component {
