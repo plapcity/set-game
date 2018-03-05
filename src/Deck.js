@@ -10,7 +10,7 @@ class Deck extends React.Component {
 
 	render(){
 		const numCards = this.props.deck.length;
-		const cards = this.props.deck.map((card, index) => <Card key={index} card={card}/>
+		const cards = this.props.deck.map((card, index) => <Card key={card.id} card={card}/>
 	)
 		return(
 			<div className='deck'>

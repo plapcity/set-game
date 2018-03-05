@@ -8,7 +8,6 @@ class Board extends React.Component {
 		super(props);
 		this.state ={
 			cardsOnBoard: this.props.cards, /* this will always be blank because its a blank board to start */
-			selectedCards: this.props.selectedCards,
 		}
 	} 
 
@@ -16,8 +15,8 @@ class Board extends React.Component {
 		// there's probably a better way to do this
 		const spaces = Array(this.props.spaces).fill('space');
 		// if the index is in the selectedCards array, send through true
-		const cards = this.props.cards.map((card, index) => (
-			<Card onClick={() => this.props.onClick(this.props.cards, index)} key={index} card={card} selected={this.state.selectedCards.includes(index)}/>
+		const cards = this.props.cards.map((card) => (
+			<Card onClick={() => this.props.onClick(this.props.cards, card.id)} key={card.id} card={card} selected={this.props.selectedCards.includes(card.id)}/>
 			)
 		)
 		return(

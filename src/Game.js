@@ -49,7 +49,7 @@ class Game extends React.Component {
 		}
 
 		const cards = cartesian(colors, numbers, shapes, patterns);
-		const fullDeck = cards.map(([color, number, shape, pattern]) => ({color, number, shape, pattern}));
+		const fullDeck = cards.map(([color, number, shape, pattern, id], index) => ({id: index, color, number, shape, pattern}));
 
 
 		this.shuffleDeck(fullDeck);
@@ -75,7 +75,6 @@ class Game extends React.Component {
 
 
 	deal(){
-		// TODO: SEND THROUGH INDEX FROM DECK, NOT JUST INDEX ON BOARD SO EACH CARD HAS A UNIQUE IDENTIFIER ACROSS STATES (deck --> board --> sets )
 		const numCards = this.state.availableSpaces;
 		const deck = this.state.deck;
 		const cardsOnBoard = deck.splice(0, numCards)
@@ -87,7 +86,6 @@ class Game extends React.Component {
 	}
 
 	handleCardClick(cardsOnBoard, i){
-		// TODO -- select individual cards doesn't work -- it knows they were clicked but the CSS styles aren't being passed yet. 
 		let selectedCards = this.state.selectedCards
 
 		if (selectedCards.includes(i)) {
@@ -108,9 +106,9 @@ class Game extends React.Component {
 
 	checkSet(selectedCards){
 		const cardsOnBoard = this.state.cardsOnBoard;
-		const card1 = cardsOnBoard[selectedCards[0]];
-		const card2 = cardsOnBoard[selectedCards[1]];
-		const card3 = cardsOnBoard[selectedCards[2]];
+		var card1 = cardsOnBoard.find(function (card1) {return card1.id == selectedCards[0]})
+		var card2 = cardsOnBoard.find(function (card2) {return card2.id == selectedCards[1]})
+		var card3 = cardsOnBoard.find(function (card3) {return card3.id == selectedCards[2]})
 		const set = [card1, card2, card3];
 		const cardProps = {color: '', shape: '', pattern: '', number: ''};
 		let setCheck = [];
@@ -149,6 +147,7 @@ class Game extends React.Component {
 
 	render(){
 		let selectedCards = this.state.selectedCards;
+		console.log(selectedCards);
 		return(
 			<div className="game">
 				<h1>ReSet</h1>
@@ -156,7 +155,7 @@ class Game extends React.Component {
 				<button onClick={this.deal}>Deal</button>
 				<div className="gameContainer">
 					<Deck deck={this.state.deck}/>
-					<Board spaces={this.state.availableSpaces} cards={this.state.cardsOnBoard} onClick={this.handleCardClick} selectedCards={this.state.selectedCards}/>
+					<Board spaces={this.state.availableSpaces} cards={this.state.cardsOnBoard} onClick={this.handleCardClick} selectedCards={selectedCards}/>
 					<SetList numberSets={this.state.completedSets}/>
 				</div>
 			</div>
