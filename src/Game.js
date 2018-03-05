@@ -12,11 +12,17 @@ class Game extends React.Component {
 			deck: [],
 			availableSpaces: 12,
 			cardsOnBoard: [],
+			selectedCards: [],
 			completedSets: 0,
+			cardsInSets:[]
 		};
 		this.deal = this.deal.bind(this);
 		this.createDeck = this.createDeck.bind(this);
 		this.shuffleDeck = this.shuffleDeck.bind(this);
+		this.checkSet = this.checkSet.bind(this);
+		this.handleCardClick = this.handleCardClick.bind(this);
+		this.moveSet = this.moveSet.bind(this);
+
 	}
 
 	createDeck() {
@@ -69,6 +75,7 @@ class Game extends React.Component {
 
 
 	deal(){
+		// TODO: SEND THROUGH INDEX FROM DECK, NOT JUST INDEX ON BOARD SO EACH CARD HAS A UNIQUE IDENTIFIER ACROSS STATES (deck --> board --> sets )
 		const numCards = this.state.availableSpaces;
 		const deck = this.state.deck;
 		const cardsOnBoard = deck.splice(0, numCards)
@@ -79,8 +86,69 @@ class Game extends React.Component {
 		});
 	}
 
+	handleCardClick(cardsOnBoard, i){
+		// TODO -- select individual cards doesn't work -- it knows they were clicked but the CSS styles aren't being passed yet. 
+		let selectedCards = this.state.selectedCards
+
+		if (selectedCards.includes(i)) {
+				selectedCards.splice(selectedCards.indexOf(i), 1);
+		}
+		else {
+			selectedCards = [...this.state.selectedCards, i]
+		}
+	
+		this.setState({
+			selectedCards: selectedCards
+		})
+
+		if (selectedCards.length == 3) {
+			this.checkSet(selectedCards)
+		}
+	}
+
+	checkSet(selectedCards){
+		const cardsOnBoard = this.state.cardsOnBoard;
+		const card1 = cardsOnBoard[selectedCards[0]];
+		const card2 = cardsOnBoard[selectedCards[1]];
+		const card3 = cardsOnBoard[selectedCards[2]];
+		const set = [card1, card2, card3];
+		const cardProps = {color: '', shape: '', pattern: '', number: ''};
+		let setCheck = [];
+
+
+
+		for (let prop in cardProps) {
+			// console.log(prop, card1[prop], card2[prop], card3[prop]);
+			const checkProps = (card1[prop] === card2[prop]) && (card2[prop] == card3[prop]) && (card1[prop] == card3[prop]) || (card1[prop] !== card2[prop]) && (card2[prop] !== card3[prop]) && (card1[prop] !== card3[prop]);
+			
+			setCheck = [...setCheck, checkProps]
+		}
+
+		const isSet = setCheck.every((val) => val === true)
+
+		if (isSet) {
+			this.setState({
+				completedSets: this.state.completedSets+1
+			});
+			this.moveSet(selectedCards);
+		}
+		alert(isSet ? "IT'S A SET" : "IT'S NOT A SET")
+
+
+	}
+
+	moveSet(set){
+		// TODO: FIGURE OUT HOW TO ACTUALLY MOVE SET OUT OF BOARD
+		console.log("move set", set);
+		this.setState({
+			cardsInSets: [...this.state.cardsInSets, set]
+		})
+	}
+
+
 
 	render(){
+		let selectedCards = this.state.selectedCards;
 		return(
 			<div className="game">
 				<h1>ReSet</h1>
@@ -88,8 +156,8 @@ class Game extends React.Component {
 				<button onClick={this.deal}>Deal</button>
 				<div className="gameContainer">
 					<Deck deck={this.state.deck}/>
-					<Board spaces={this.state.availableSpaces} cards={this.state.cardsOnBoard}/>
-					<SetList sets={this.state.completedSets}/>
+					<Board spaces={this.state.availableSpaces} cards={this.state.cardsOnBoard} onClick={this.handleCardClick} selectedCards={this.state.selectedCards}/>
+					<SetList numberSets={this.state.completedSets}/>
 				</div>
 			</div>
 		)

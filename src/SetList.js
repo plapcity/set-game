@@ -11,13 +11,11 @@ class SetList extends React.Component {
 	render(){
 		return(
 			<div className='setList'>
-				<h3>There are {this.props.sets} completed sets</h3>
+				<h3>There are {this.props.numberSets} completed sets</h3>
+				<p>Sets: {this.props.sets}</p>
 			</div>
 		)
-
 	}
 }
-
-
 
 export default SetList;
