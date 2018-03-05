@@ -9,10 +9,13 @@ class SetList extends React.Component {
 	}
 
 	render(){
+		const sets = this.props.sets.map((set, index) => <div key={index} className="setGroup">{(set.map((card) =>
+			<Card key={card.id} card={card} />
+			))}</div>)
 		return(
 			<div className='setList'>
-				<h3>There are {this.props.numberSets} completed sets</h3>
-				<p>Sets: {this.props.sets}</p>
+				<h3>There are {this.props.sets.length} completed sets</h3> 
+				{sets}
 			</div>
 		)
 	}

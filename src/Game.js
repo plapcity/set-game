@@ -13,8 +13,7 @@ class Game extends React.Component {
 			availableSpaces: 12,
 			cardsOnBoard: [],
 			selectedCards: [],
-			completedSets: 0,
-			cardsInSets:[]
+			sets:[]
 		};
 		this.deal = this.deal.bind(this);
 		this.createDeck = this.createDeck.bind(this);
@@ -77,47 +76,50 @@ class Game extends React.Component {
 	deal(){
 		const numCards = this.state.availableSpaces;
 		const deck = this.state.deck;
-		const cardsOnBoard = deck.splice(0, numCards)
+		const cardsToDeal = deck.splice(0, numCards)
 		this.setState({
 			availableSpaces: 0,
-			cardsOnBoard: cardsOnBoard,
+			cardsOnBoard: this.state.cardsOnBoard.concat(cardsToDeal),
 			deck: deck,
 		});
 	}
 
-	handleCardClick(cardsOnBoard, i){
+	handleCardClick(cardsOnBoard, cardID){
 		let selectedCards = this.state.selectedCards
+		let card = cardsOnBoard.find(function(card) {return card.id === cardID});
 
-		if (selectedCards.includes(i)) {
-				selectedCards.splice(selectedCards.indexOf(i), 1);
+
+		if (selectedCards.includes(card)) {
+				// deselect card, remove from array
+				selectedCards.splice(selectedCards.indexOf(card), 1);
 		}
 		else {
-			selectedCards = [...this.state.selectedCards, i]
+			// select card, add to array
+			selectedCards = [...this.state.selectedCards, card]
 		}
 	
 		this.setState({
 			selectedCards: selectedCards
 		})
 
-		if (selectedCards.length == 3) {
+		if (selectedCards.length === 3) {
 			this.checkSet(selectedCards)
 		}
 	}
 
 	checkSet(selectedCards){
-		const cardsOnBoard = this.state.cardsOnBoard;
-		var card1 = cardsOnBoard.find(function (card1) {return card1.id == selectedCards[0]})
-		var card2 = cardsOnBoard.find(function (card2) {return card2.id == selectedCards[1]})
-		var card3 = cardsOnBoard.find(function (card3) {return card3.id == selectedCards[2]})
-		const set = [card1, card2, card3];
 		const cardProps = {color: '', shape: '', pattern: '', number: ''};
+
+		// prob a better way to create this dynamically
+		const card1 = selectedCards[0]
+		const card2 = selectedCards[1]
+		const card3 = selectedCards[2]
 		let setCheck = [];
 
 
-
+		// prob a better way to create this dynamically
 		for (let prop in cardProps) {
-			// console.log(prop, card1[prop], card2[prop], card3[prop]);
-			const checkProps = (card1[prop] === card2[prop]) && (card2[prop] == card3[prop]) && (card1[prop] == card3[prop]) || (card1[prop] !== card2[prop]) && (card2[prop] !== card3[prop]) && (card1[prop] !== card3[prop]);
+			const checkProps = (card1[prop] === card2[prop]) && (card2[prop] === card3[prop]) && (card1[prop] === card3[prop]) || (card1[prop] !== card2[prop]) && (card2[prop] !== card3[prop]) && (card1[prop] !== card3[prop]);
 			
 			setCheck = [...setCheck, checkProps]
 		}
@@ -126,28 +128,29 @@ class Game extends React.Component {
 
 		if (isSet) {
 			this.setState({
-				completedSets: this.state.completedSets+1
+				selectedCards: [],
 			});
 			this.moveSet(selectedCards);
 		}
-		alert(isSet ? "IT'S A SET" : "IT'S NOT A SET")
-
-
 	}
 
 	moveSet(set){
-		// TODO: FIGURE OUT HOW TO ACTUALLY MOVE SET OUT OF BOARD
-		console.log("move set", set);
+		const cardsOnBoard = this.state.cardsOnBoard
+
+		// figure out more dynamic way to do this
+		cardsOnBoard.splice(cardsOnBoard.indexOf(set[0]), 1);
+		cardsOnBoard.splice(cardsOnBoard.indexOf(set[1]), 1);
+		cardsOnBoard.splice(cardsOnBoard.indexOf(set[2]), 1);
+
 		this.setState({
-			cardsInSets: [...this.state.cardsInSets, set]
+			sets: [...this.state.sets, set],
+			availableSpaces: 3
 		})
 	}
 
 
 
 	render(){
-		let selectedCards = this.state.selectedCards;
-		console.log(selectedCards);
 		return(
 			<div className="game">
 				<h1>ReSet</h1>
@@ -155,8 +158,8 @@ class Game extends React.Component {
 				<button onClick={this.deal}>Deal</button>
 				<div className="gameContainer">
 					<Deck deck={this.state.deck}/>
-					<Board spaces={this.state.availableSpaces} cards={this.state.cardsOnBoard} onClick={this.handleCardClick} selectedCards={selectedCards}/>
-					<SetList numberSets={this.state.completedSets}/>
+					<Board spaces={this.state.availableSpaces} cards={this.state.cardsOnBoard} onClick={this.handleCardClick} selectedCards={this.state.selectedCards}/>
+					<SetList sets ={this.state.sets}/>
 				</div>
 			</div>
 		)

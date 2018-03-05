@@ -16,7 +16,7 @@ class Board extends React.Component {
 		const spaces = Array(this.props.spaces).fill('space');
 		// if the index is in the selectedCards array, send through true
 		const cards = this.props.cards.map((card) => (
-			<Card onClick={() => this.props.onClick(this.props.cards, card.id)} key={card.id} card={card} selected={this.props.selectedCards.includes(card.id)}/>
+			<Card onClick={() => this.props.onClick(this.props.cards, card.id)} key={card.id} card={card} selected={this.props.selectedCards.includes(card)}/>
 			)
 		)
 		return(

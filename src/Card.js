@@ -11,7 +11,7 @@ class Card extends React.Component {
 		const shapes = [];
 		const card = this.props.card;
 		for (var i = 0; i < card.number; i++) {
-			shapes.push(<img className="card-img" key={i} src={`shape-${card.shape}.svg`}/>)
+			shapes.push(<img alt={`${card.shape}-icon`} className="card-img" key={i} src={`shape-${card.shape}.svg`}/>)
 		}
 		return shapes;
 	}
