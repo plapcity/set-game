@@ -53,10 +53,12 @@ class Game extends React.Component {
 		const cards = cartesian(colors, numbers, shapes, patterns);
 		const fullDeck = cards.map(([color, number, shape, pattern, id], index) => ({id: index, color, number, shape, pattern}));
 
-		// this.shuffleDeck(fullDeck);
-		this.setState({
-			deck: fullDeck
-		})
+		this.shuffleDeck(fullDeck);
+
+		// FOR EASY TESTING: use unshuffled deck (comment out shuffleDeck() call)
+		// this.setState({
+		// 	deck: fullDeck
+		// })
 	}
 
 	shuffleDeck(array) {
