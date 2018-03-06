@@ -22,6 +22,8 @@ class Game extends React.Component {
 		this.handleCardClick = this.handleCardClick.bind(this);
 		this.moveSet = this.moveSet.bind(this);
 		this.dealMore = this.dealMore.bind(this);
+		this.compareProp = this.compareProp.bind(this);
+		this.compareAllProps = this.compareAllProps.bind(this);
 
 	}
 
@@ -51,7 +53,10 @@ class Game extends React.Component {
 		const cards = cartesian(colors, numbers, shapes, patterns);
 		const fullDeck = cards.map(([color, number, shape, pattern, id], index) => ({id: index, color, number, shape, pattern}));
 
-		this.shuffleDeck(fullDeck);
+		// this.shuffleDeck(fullDeck);
+		this.setState({
+			deck: fullDeck
+		})
 	}
 
 	shuffleDeck(array) {
@@ -84,7 +89,6 @@ class Game extends React.Component {
 	}
 
 	dealMore(){
-
 		const deck = this.state.deck;
 		const cardsToDeal = deck.splice(0, 3)
 		this.setState({
@@ -120,25 +124,7 @@ class Game extends React.Component {
 	checkSet(selectedCards){
 		const cardProps = {color: '', shape: '', pattern: '', number: ''};
 
-		// prob a better way to create this dynamically
-		const card1 = selectedCards[0]
-		const card2 = selectedCards[1]
-		const card3 = selectedCards[2]
-		let setCheck = [];
-
-
-		// prob a better way to create this dynamically
-		for (let prop in cardProps) {
-
-			const checkProps = (card1[prop] === card2[prop]) && (card2[prop] === card3[prop]) || (card1[prop] !== card2[prop]) && (card2[prop] !== card3[prop]) && (card1[prop] !== card3[prop]);
-			// note: for "all same", i only need to check if a & b, and b & c are equal. if both of those are true then a & c must be equal
-
-			setCheck = [...setCheck, checkProps]
-		}
-
-		const isSet = setCheck.every((val) => val === true)
-
-		if (isSet) {
+		if (this.compareAllProps(selectedCards, cardProps)) {
 			this.setState({
 				selectedCards: [],
 			});
@@ -149,6 +135,29 @@ class Game extends React.Component {
 			this.setState({
 				selectedCards: []
 			})
+		}
+	}
+
+	compareAllProps(selectedCards, cardProps){
+		for (let prop in cardProps) {
+			if (!this.compareProp(selectedCards, prop)) {
+				return false;
+			}
+		}
+		return true;
+	}	
+
+	compareProp(selectedCards, prop){
+		const card1 = selectedCards[0]
+		const card2 = selectedCards[1]
+		const card3 = selectedCards[2]
+
+		// const checkProps = (card1[prop] === card2[prop]) && (card2[prop] === card3[prop]) || (card1[prop] !== card2[prop]) && (card2[prop] !== card3[prop]) && (card1[prop] !== card3[prop]);
+		if (card1[prop] === card2[prop]) {
+			return (card2[prop] === card3[prop])
+		}
+		else {
+			return (card2[prop] !== card3[prop]) && (card1[prop] !== card3[prop])
 		}
 	}
 
@@ -176,7 +185,7 @@ class Game extends React.Component {
 				<h1>ReSet</h1>
 				<button disabled={this.state.deck.length > 0} onClick={this.createDeck}>Create Deck</button>
 				<button disabled={this.state.availableSpaces == 0} onClick={this.deal}>Deal</button>
-				<button onClick={this.dealMore}>Deal more!</button>
+				<button disabled={this.state.cardsOnBoard.length > 12 }onClick={this.dealMore}>Deal more!</button>
 				<div className="gameContainer">
 					<Deck deck={this.state.deck}/>
 					<Board spaces={this.state.availableSpaces} cards={this.state.cardsOnBoard} onClick={this.handleCardClick} selectedCards={this.state.selectedCards}/>
