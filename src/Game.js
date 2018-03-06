@@ -15,6 +15,7 @@ class Game extends React.Component {
 			selectedCards: [],
 			sets:[]
 		};
+		this.baseState = this.state
 		this.deal = this.deal.bind(this);
 		this.createDeck = this.createDeck.bind(this);
 		this.shuffleDeck = this.shuffleDeck.bind(this);
@@ -24,8 +25,13 @@ class Game extends React.Component {
 		this.dealMore = this.dealMore.bind(this);
 		this.compareProp = this.compareProp.bind(this);
 		this.compareAllProps = this.compareAllProps.bind(this);
+		this.resetGame = this.resetGame.bind(this);
 
 	}
+
+	resetGame() {
+		this.setState(this.baseState);
+	}	
 
 	createDeck() {
 		// create new deck
@@ -73,15 +79,17 @@ class Game extends React.Component {
 		  }
 		  return array
 		}
+		const deck = shuffle(array)
 		this.setState({
-			deck: shuffle(array)
+			deck: deck
 		})
+
+		this.deal(deck)
 	}
 
 
-	deal(){
+	deal(deck){
 		const numCards = this.state.availableSpaces;
-		const deck = this.state.deck;
 		const cardsToDeal = deck.splice(0, numCards)
 		this.setState({
 			availableSpaces: 0,
@@ -176,7 +184,7 @@ class Game extends React.Component {
 			sets: [...this.state.sets, set],
 			availableSpaces: spacesToFill,
 			cardsOnBoard: cardsOnBoard
-		}, function(){this.deal()})
+		}, function(){this.deal(this.state.deck)})
 		// ^ using a setState callback to auto-call "deal" once a set is moved out
 	}
 
@@ -185,9 +193,9 @@ class Game extends React.Component {
 		return(
 			<div className="game">
 				<h1>ReSet</h1>
-				<button disabled={this.state.deck.length > 0} onClick={this.createDeck}>Create Deck</button>
-				<button disabled={this.state.availableSpaces == 0} onClick={this.deal}>Deal</button>
-				<button disabled={this.state.cardsOnBoard.length > 12 }onClick={this.dealMore}>Deal more!</button>
+				<button onClick={this.resetGame}>Restart Game</button>
+				<button disabled={this.state.deck.length > 0} onClick={this.createDeck}>Start Game</button>
+				<button disabled={(this.state.cardsOnBoard.length > 12) || (this.state.cardsOnBoard.length < 12) }onClick={this.dealMore}>Deal more!</button>
 				<div className="gameContainer">
 					<Deck deck={this.state.deck}/>
 					<Board spaces={this.state.availableSpaces} cards={this.state.cardsOnBoard} onClick={this.handleCardClick} selectedCards={this.state.selectedCards}/>
