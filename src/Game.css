@@ -1,6 +1,13 @@
 .game {
-	width: 80%;
-	margin: 0 auto;
+	padding: 40px;
+}
+
+h1 {
+	margin: 15px 0;
+}
+
+.buttonWrapper {
+	margin: 15px 0;
 }
 
 button {
@@ -16,4 +23,14 @@ button {
 button:disabled {
 	background: gray;
 	color: black;
+}
+
+.flexContainer {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.gameInfo {
+	padding-right: 20px;
 }

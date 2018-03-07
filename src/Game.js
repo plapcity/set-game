@@ -192,15 +192,20 @@ class Game extends React.Component {
 	render(){
 		return(
 			<div className="game">
-				<h1>ReSet</h1>
-				<button onClick={this.resetGame}>Restart Game</button>
-				<button disabled={this.state.deck.length > 0} onClick={this.createDeck}>Start Game</button>
-				<button disabled={(this.state.cardsOnBoard.length > 12) || (this.state.cardsOnBoard.length < 12) }onClick={this.dealMore}>Deal more!</button>
-				<div className="gameContainer">
-					<Deck deck={this.state.deck}/>
+				<div className="flexContainer">
+					<div className="gameInfo">
+						<h1>ReSet</h1>
+						<div className="buttonWrapper">
+							<button disabled={this.state.deck.length > 0} onClick={this.createDeck}>Start Game</button>
+							<button disabled={(this.state.cardsOnBoard.length > 12) || (this.state.cardsOnBoard.length < 12) }onClick={this.dealMore}>Deal more!</button>
+							<button onClick={this.resetGame}>Restart Game</button>
+						</div>
+						<Deck deck={this.state.deck}/>
+						<SetList sets ={this.state.sets}/>
+					</div>
 					<Board spaces={this.state.availableSpaces} cards={this.state.cardsOnBoard} onClick={this.handleCardClick} selectedCards={this.state.selectedCards}/>
-					<SetList sets ={this.state.sets}/>
 				</div>
+				
 			</div>
 		)
 	}

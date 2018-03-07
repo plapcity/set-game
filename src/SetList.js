@@ -6,18 +6,30 @@ import Card from './Card';
 class SetList extends React.Component {
 	constructor(props){
 		super(props);
+		this.renderSets = this.renderSets.bind(this);
+	}
+
+
+	renderSets(){
+		if (this.props.sets.length > 0) {
+			const sets = this.props.sets.map((set, index) => 
+				<div key={index} className="setGroup">
+					{(set.map((card) =>
+						<Card key={card.id} card={card} />
+					))}
+				</div>
+			)
+			return sets;
+		} 
 	}
 
 	render(){
-		const sets = this.props.sets.map((set, index) => <div key={index} className="setGroup">{(set.map((card) =>
-			<Card key={card.id} card={card} />
-			))}</div>)
+		const text = this.props.sets.length > 0 ? `${this.props.sets.length} Sets:` : "No sets yet."
 		return(
-			<div className='setList'>
-				<h4>There are {this.props.sets.length} completed sets</h4> 
-				<div className="sets">
-					{sets}
-				</div>
+			<div id="setList" className='setList'>
+				<h3>{text}</h3>
+				{this.renderSets()}
+				
 			</div>
 		)
 	}
