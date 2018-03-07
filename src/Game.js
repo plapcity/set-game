@@ -195,6 +195,7 @@ class Game extends React.Component {
 				<div className="flexContainer">
 					<div className="gameInfo">
 						<h1>ReSet</h1>
+						<small><a href="https://puzzles.setgame.com/set/rules_set.htm" target="_blank">Rules of Set</a></small>
 						<div className="buttonWrapper">
 							<button disabled={this.state.deck.length > 0} onClick={this.createDeck}>Start Game</button>
 							<button disabled={(this.state.cardsOnBoard.length > 12) || (this.state.cardsOnBoard.length < 12) }onClick={this.dealMore}>Deal more!</button>
