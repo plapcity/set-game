@@ -7,19 +7,18 @@
 }*/
 .card {
   display: flex;
-  flex-basis: 25%;
   width: 200px;
-  height: 100px;
-  margin: 10px;
+  height: 110px;
+  margin: 10px 0;
   padding: 10px;
-  flex-grow: 1;
   text-align: center;
   border: 1px solid black; 
+  border-radius: 20px;
 
 }
 
 .card svg {
-  height: 70px;
+  height: 60px;
   width: auto;
   margin: auto; 
   transform: rotate(90deg);

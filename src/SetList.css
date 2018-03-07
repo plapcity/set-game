@@ -1,6 +1,6 @@
 .setList {
   border: 1px solid purple;
-  margin: 50px 0;
+  margin-top: 25px;
   padding: 10px;
 }
 
@@ -15,4 +15,14 @@
 	display: flex;
 	flex-flow: row wrap;
 	margin: 20px;
+	justify-content: space-between;
+}
+
+.setList .card {
+	height: 54px;
+	width: 100px;
+}
+
+.setList .card svg {
+	height: 29px;
 }
