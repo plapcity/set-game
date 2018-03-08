@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import './Card.css';
 
-
 class Card extends React.Component {
 	renderShapes(){
-		const shapes = [];
 		const card = this.props.card;
 		const shapeIcons = {
 			wavesolid: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><title>wave solid</title><path d="M399.43,180.24c-.11,57.12-45.69,104.42-102.81,105.15-27.23.35-59.42-6.38-96.67-24.78-68.33-33.75-119.86-28.24-154.69-11.79C24.47,258.63.57,243,.57,220v0c0-57.21,45.62-104.71,102.82-105.36,27.23-.3,59.41,6.44,96.56,24.79,68.33,33.75,119.76,28.23,154.63,11.79,20.89-9.86,44.9,5.86,44.85,29Z"/></svg>, 
@@ -17,9 +15,9 @@ class Card extends React.Component {
 			diamondstriped: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><title>diamond striped</title><polygon points="308 135.62 301 130.72 301 269.28 308 264.38 308 135.62"/><polygon points="325 147.52 318 142.62 318 257.38 325 252.48 325 147.52"/><polygon points="395 196.5 388 191.6 388 208.4 395 203.5 395 196.5"/><polygon points="378 184.6 370 179.01 370 220.99 378 215.4 378 184.6"/><polygon points="360 172.01 353 167.11 353 232.89 360 227.99 360 172.01"/><polygon points="214 330.15 221 325.26 221 74.74 214 69.84 214 330.15"/><polygon points="291 123.73 283 118.13 283 281.87 291 276.27 291 123.73"/><polygon points="12 191.6 5 196.5 5 203.5 12 208.4 12 191.6"/><polygon points="238 86.64 231 81.74 231 318.26 238 313.36 238 86.64"/><polygon points="256 99.23 248 93.64 248 306.36 256 300.76 256 99.23"/><polygon points="273 111.13 266 106.23 266 293.77 273 288.87 273 111.13"/><polygon points="343 160.11 335 154.52 335 245.48 343 239.89 343 160.11"/><polygon points="134 106.23 127 111.13 127 288.87 134 293.77 134 106.23"/><polygon points="152 93.64 144 99.23 144 300.76 152 306.36 152 93.64"/><polygon points="169 81.74 162 86.64 162 313.36 169 318.26 169 81.74"/><polygon points="186 69.84 179 74.74 179 325.26 186 330.15 186 69.84"/><polygon points="204 62.85 200 60.05 196 62.85 196 337.15 200 339.95 204 337.15 204 62.85"/><polygon points="30 179.01 22 184.6 22 215.4 30 220.99 30 179.01"/><polygon points="47 167.11 40 172.01 40 227.99 47 232.89 47 167.11"/><polygon points="117 118.13 109 123.73 109 276.27 117 281.87 117 118.13"/><polygon points="65 154.52 57 160.11 57 239.89 65 245.48 65 154.52"/><polygon points="99 130.72 92 135.62 92 264.38 99 269.28 99 130.72"/><polygon points="82 142.62 75 147.52 75 252.48 82 257.38 82 142.62"/><path d="M200,72.25,382.56,200,200,327.75,17.44,200,200,72.25m0-12.2L0,200,200,340,400,200,200,60.05Z"/></svg>,
 			diamondopen: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><title>diamond open</title><path d="M200,72.25,382.56,200,200,327.75,17.44,200,200,72.25m0-12.2L0,200,200,340,400,200,200,60.05Z"/></svg>
 		}
-		for (var i = 0; i < card.number; i++) {
-			shapes.push(shapeIcons[card.shape+card.pattern]);
-		}
+		const shapes = Array(card.number).fill(shapeIcons[card.shape+card.pattern])
+		// wrapping in a span to avoid key warning
+		shapes.map((shape, index) => <span>{shape}</span>)
 		return shapes;
 	}
 
