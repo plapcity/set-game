@@ -24,7 +24,7 @@ class SetList extends React.Component {
 	}
 
 	render(){
-		const text = this.props.sets.length > 0 ? `${this.props.sets.length} Sets:` : "No sets yet."
+		const text = this.props.sets.length > 0 ? `${this.props.sets.length} Sets Made:` : "No sets yet."
 		return(
 			<div id="setList" className='setList'>
 				<h3>{text}</h3>
