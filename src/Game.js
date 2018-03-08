@@ -64,7 +64,7 @@ class Game extends React.Component {
 		// FOR EASY TESTING: use unshuffled deck (comment out shuffleDeck() call)
 		// this.setState({
 		// 	deck: fullDeck
-		// })
+		// }, this.deal(fullDeck))
 	}
 
 	shuffleDeck(array) {
@@ -124,12 +124,11 @@ class Game extends React.Component {
 	
 		this.setState({
 			selectedCards: selectedCards
-		}, function(){	if (this.state.selectedCards.length === 3) {
+		}, () =>	{if (this.state.selectedCards.length === 3) {
 			this.checkSet(this.state.selectedCards)
 		}})
-
-	
 	}
+
 
 	checkSet(selectedCards){
 		const cardProps = {color: '', shape: '', pattern: '', number: ''};
@@ -141,10 +140,13 @@ class Game extends React.Component {
 			this.moveSet(selectedCards);
 		}
 		else {
-			alert("Heyo, that's not a set");
-			this.setState({
-				selectedCards: []
-			})
+			setTimeout(() => {
+				alert("Heyo - that's not a set");
+				this.setState({
+					selectedCards: []
+				})
+			}, 10)
+	
 		}
 	}
 
